@@ -6,6 +6,7 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from .serializers import PostSerializer, CommentSerializer
 from rest_framework.permissions import IsAuthenticated, IsAuthenticatedOrReadOnly
+from rest_framework.filters import SearchFilter
 from .permissions import IsOwner
 
 
@@ -13,6 +14,8 @@ from .permissions import IsOwner
 class PostListView(ListAPIView):
     queryset = Post.objects.all()
     serializer_class = PostSerializer
+    filter_backends = [SearchFilter]
+    search_fields = ['title', 'content']
 
 
 class PostCreateView(CreateAPIView):
